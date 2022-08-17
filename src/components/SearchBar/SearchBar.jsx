@@ -1,4 +1,6 @@
 import { Component } from 'react';
+import { ImSearch } from 'react-icons/im';
+// import { toast } from 'react-toastify';
 import style from './SearchBar.module.css';
 
 class SearchBar extends Component {
@@ -12,6 +14,11 @@ class SearchBar extends Component {
   hanedleSubmit = event => {
     event.preventDefault();
 
+    if (this.state.imageName.trim() === '') {
+      alert('Input image name');
+      return;
+    }
+
     this.props.onSubmit(this.state.imageName);
 
     this.setState({ imageName: '' });
@@ -19,17 +26,20 @@ class SearchBar extends Component {
   render() {
     return (
       <header className={style.searchbar}>
-        <form className={style.form}>
+        <form className={style.form} onSubmit={this.hanedleSubmit}>
           <button type="submit" className={style.button}>
-            <span className={style.button__label}>Search</span>
+            <ImSearch />
           </button>
 
           <input
             className={style.input}
             type="text"
+            name="imageName"
             autoComplete="off"
             autoFocus
             placeholder="Search images and photos"
+            value={this.state.imageName}
+            onChange={this.hendleNameChange}
           />
         </form>
       </header>

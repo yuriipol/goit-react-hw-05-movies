@@ -1,5 +1,6 @@
 import React from 'react';
 import { Component } from 'react';
+// import { ToastContainer } from 'react-toastify';
 import Modal from './Modal';
 import SearchBar from './SearchBar';
 import Gallary from './Gallary';
@@ -7,22 +8,12 @@ import Gallary from './Gallary';
 class App extends Component {
   state = {
     showModal: false,
-    images: null,
-    loading: false,
+    imageName: '',
   };
-  // #BASE_URL = 'https://pixabay.com/api/';
-  // #API_KEY = '28704942-6968b84373f0d7bd37bb26e4e';
-  componentDidMount() {
-    this.setState({ loading: true });
-    fetch(
-      'https://pixabay.com/api/?q=cat&page=1&key=28704942-6968b84373f0d7bd37bb26e4e&image_type=photo&orientation=horizontal&per_page=12'
-    )
-      .then(res => res.json())
-      .then(data => data.hits)
-      .then(images => this.setState({ images }))
-      .finally(() => this.setState({ loading: false }));
-  }
-  componentWillUnmount() {}
+
+  hendleFormSearchSubmit = imageName => {
+    this.setState({ imageName });
+  };
 
   toggleModal = () => {
     this.setState(({ showModal }) => ({
@@ -31,16 +22,16 @@ class App extends Component {
   };
 
   render() {
-    // console.log(this.state.images);
-    const { showModal, images, loading } = this.state;
+    const { showModal, imageName } = this.state;
     return (
       <>
-        <SearchBar />
+        {/* <ToastContainer /> */}
+        <SearchBar onSubmit={this.hendleFormSearchSubmit} />
         <button type="button" onClick={this.toggleModal}>
           Open modal WINDOW
         </button>
-        {loading && <h1>Loading!!!</h1>}
-        {images && <Gallary arrayImages={images} />}
+
+        <Gallary imageName={imageName} />
 
         {showModal && (
           <Modal onClose={this.toggleModal}>
