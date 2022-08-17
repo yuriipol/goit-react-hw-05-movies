@@ -49,7 +49,7 @@ class Gallery extends Component {
   onClickLoadMore = prevState => {
     const { page } = this.state;
     this.setState({ page: page + 1 });
-    // console.log(this.state.page);
+    console.log(this.state.page);
   };
   toggleModal = () => {
     this.setState(({ showModal }) => ({
@@ -60,7 +60,7 @@ class Gallery extends Component {
   render() {
     const { images, error, status, showModal, lageImage } = this.state;
     if (status === 'idle') {
-      return <h1>Enter name of imeges please</h1>;
+      return <h1 className={style.title}>Enter name of imeges please</h1>;
     }
     if (status === 'pending') {
       return <Loader />;
@@ -92,8 +92,12 @@ class Gallery extends Component {
           {showModal && (
             <Modal onClose={this.toggleModal}>
               <img src={lageImage} alt="lageImage" width={1100} />
-              <button type="button" onClick={this.toggleModal}>
-                Close
+              <button
+                type="button"
+                className={style.buttonCloseModal}
+                onClick={this.toggleModal}
+              >
+                close
               </button>
             </Modal>
           )}

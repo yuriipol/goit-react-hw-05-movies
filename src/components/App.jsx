@@ -20,9 +20,6 @@ class App extends Component {
       <>
         {/* <ToastContainer /> */}
         <SearchBar onSubmit={this.hendleFormSearchSubmit} />
-        <button type="button" onClick={this.toggleModal}>
-          Open modal WINDOW
-        </button>
         <Gallary imageName={imageName} />
       </>
     );
