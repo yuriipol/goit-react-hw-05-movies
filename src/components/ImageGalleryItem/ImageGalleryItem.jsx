@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import style from './ImageGalleryItem.module.css';
 
 const ImageGalleryItem = ({ image, onClick }) => {
@@ -13,3 +14,12 @@ const ImageGalleryItem = ({ image, onClick }) => {
 };
 
 export default ImageGalleryItem;
+
+ImageGalleryItem.propTypes = {
+  image: PropTypes.shape({
+    id: PropTypes.number,
+    webkitURL: PropTypes.string,
+    tag: PropTypes.string,
+  }),
+  onclick: PropTypes.func,
+};

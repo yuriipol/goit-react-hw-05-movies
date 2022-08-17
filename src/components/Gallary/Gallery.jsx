@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import style from './Gallery.module.css';
 import ImageGalleryItem from 'components/ImageGalleryItem';
+import PropTypes from 'prop-types';
 import Loader from 'components/Loader';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
@@ -106,3 +107,7 @@ class Gallery extends Component {
 }
 
 export default Gallery;
+
+Gallery.propTypes = {
+  imageName: PropTypes.string.isRequired,
+};
