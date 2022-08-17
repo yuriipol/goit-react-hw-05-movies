@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import { ImSearch } from 'react-icons/im';
-// import { toast } from 'react-toastify';
+import { toast } from 'react-toastify';
+
 import style from './SearchBar.module.css';
 
 class SearchBar extends Component {
@@ -15,7 +16,7 @@ class SearchBar extends Component {
     event.preventDefault();
 
     if (this.state.imageName.trim() === '') {
-      alert('Input image name');
+      toast('Input image name');
       return;
     }
 

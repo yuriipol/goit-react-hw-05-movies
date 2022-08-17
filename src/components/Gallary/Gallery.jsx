@@ -3,6 +3,8 @@ import style from './Gallery.module.css';
 import ImageGalleryItem from 'components/ImageGalleryItem';
 import Loader from 'components/Loader';
 import Modal from 'components/Modal';
+import Button from 'components/Button';
+import fetchImages from '../Servises/PictureAPI';
 
 class Gallery extends Component {
   state = {
@@ -13,26 +15,31 @@ class Gallery extends Component {
     lageImage: '',
     status: 'idle',
   };
-  componentDidUpdate(prevProps, prevSate) {
+  componentDidUpdate(prevProps, prevState) {
     const prevImageName = prevProps.imageName;
     const nextImageName = this.props.imageName;
-    const nextPage = this.state;
+    const page = this.state.page;
+
     if (prevImageName !== nextImageName) {
       // console.log('Change name of image');
       // console.log('prevProps.imageName:', prevProps.imageName);
       // console.log('this.props.imageName:', this.props.imageName);
-      this.setState({ status: 'pending' });
-      fetch(
-        `https://pixabay.com/api/?q=${nextImageName}&page=${nextPage}&key=28704942-6968b84373f0d7bd37bb26e4e&image_type=photo&orientation=horizontal&per_page=12`
-      )
-        .then(response => {
-          if (response.ok) {
-            return response.json();
-          }
-          return Promise.reject(new Error(`No pictures`));
-        })
+      this.setState({ status: 'pending', page: 1 });
+
+      fetchImages(nextImageName, page)
         .then(data => data.hits)
         .then(images => this.setState({ images, status: 'resolved' }))
+        .catch(error => this.setState({ error, status: 'rejected' }));
+    }
+    if (this.state.page !== prevState.page) {
+      fetchImages(nextImageName, page)
+        .then(data => data.hits)
+        .then(images =>
+          this.setState({
+            images: [...prevState.images, ...images],
+            status: 'resolved',
+          })
+        )
         .catch(error => this.setState({ error, status: 'rejected' }));
     }
   }
@@ -46,10 +53,9 @@ class Gallery extends Component {
     });
     this.toggleModal();
   };
-  onClickLoadMore = prevState => {
-    const { page } = this.state;
-    this.setState({ page: page + 1 });
-    console.log(this.state.page);
+  onClickLoadMore = () => {
+    this.setState(prevState => ({ page: prevState.page + 1 }));
+    // console.log(this.state.page);
   };
   toggleModal = () => {
     this.setState(({ showModal }) => ({
@@ -80,15 +86,7 @@ class Gallery extends Component {
               />
             ))}
           </ul>
-          {
-            <button
-              className={style.loadMore}
-              type="button"
-              onClick={this.onClickLoadMore}
-            >
-              Load more
-            </button>
-          }
+          {<Button onClick={this.onClickLoadMore} />}
           {showModal && (
             <Modal onClose={this.toggleModal}>
               <img src={lageImage} alt="lageImage" width={1100} />
