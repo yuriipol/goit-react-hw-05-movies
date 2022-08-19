@@ -26,22 +26,33 @@ class Gallery extends Component {
       // console.log('prevProps.imageName:', prevProps.imageName);
       // console.log('this.props.imageName:', this.props.imageName);
       this.setState({ status: 'pending', page: 1 });
-
-      fetchImages(nextImageName, page)
-        .then(data => data.hits)
-        .then(images => this.setState({ images, status: 'resolved' }))
-        .catch(error => this.setState({ error, status: 'rejected' }));
+      try {
+        fetchImages(nextImageName, page)
+          .then(images => images.data.hits)
+          .then(images => this.setState({ images, status: 'resolved' }));
+        // .catch(error => this.setState({ error, status: 'rejected' }));
+      } catch (error) {
+        console.log(error);
+        this.setState({ error, status: 'rejected' });
+      }
     }
+
     if (this.state.page !== prevState.page) {
-      fetchImages(nextImageName, page)
-        .then(data => data.hits)
-        .then(images =>
-          this.setState({
-            images: [...prevState.images, ...images],
-            status: 'resolved',
-          })
-        )
-        .catch(error => this.setState({ error, status: 'rejected' }));
+      try {
+        fetchImages(nextImageName, page)
+          .then(images => images.data.hits)
+          .then(images =>
+            this.setState({
+              images: [...prevState.images, ...images],
+              status: 'resolved',
+            })
+          );
+      } catch (error) {
+        console.log(error);
+        this.setState({ error, status: 'rejected' });
+      }
+
+      // .catch(error => this.setState({ error, status: 'rejected' }));
     }
   }
   onClickImage = event => {
