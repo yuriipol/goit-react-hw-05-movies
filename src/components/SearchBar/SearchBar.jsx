@@ -1,52 +1,49 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import { ImSearch } from 'react-icons/im';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 
 import style from './SearchBar.module.css';
 
-class SearchBar extends Component {
-  state = {
-    imageName: '',
-  };
-  hendleNameChange = event => {
-    this.setState({ imageName: event.currentTarget.value.toLowerCase() });
+function SearchBar({ onSubmit }) {
+  const [imageName, setImageName] = useState('');
+
+  const hendleNameChange = event => {
+    setImageName(event.currentTarget.value.toLowerCase());
   };
 
-  hanedleSubmit = event => {
+  const hanedleSubmit = event => {
     event.preventDefault();
 
-    if (this.state.imageName.trim() === '') {
+    if (imageName.trim() === '') {
       toast('Input image name');
       return;
     }
 
-    this.props.onSubmit(this.state.imageName);
+    onSubmit(imageName);
 
-    this.setState({ imageName: '' });
+    setImageName('');
   };
-  render() {
-    return (
-      <header className={style.searchbar}>
-        <form className={style.form} onSubmit={this.hanedleSubmit}>
-          <button type="submit" className={style.button}>
-            <ImSearch />
-          </button>
+  return (
+    <header className={style.searchbar}>
+      <form className={style.form} onSubmit={hanedleSubmit}>
+        <button type="submit" className={style.button}>
+          <ImSearch />
+        </button>
 
-          <input
-            className={style.input}
-            type="text"
-            name="imageName"
-            autoComplete="off"
-            autoFocus
-            placeholder="Search images and photos"
-            value={this.state.imageName}
-            onChange={this.hendleNameChange}
-          />
-        </form>
-      </header>
-    );
-  }
+        <input
+          className={style.input}
+          type="text"
+          name="imageName"
+          autoComplete="off"
+          autoFocus
+          placeholder="Search images and photos"
+          value={imageName}
+          onChange={hendleNameChange}
+        />
+      </form>
+    </header>
+  );
 }
 export default SearchBar;
 
