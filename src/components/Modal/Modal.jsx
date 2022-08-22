@@ -8,7 +8,9 @@ const modalRoot = document.querySelector('#modal-root');
 function Modal({ onClose, children }) {
   useEffect(() => {
     window.addEventListener('keydown', hendleKeyDown);
-    return window.removeEventListener('keydown', hendleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', hendleKeyDown);
+    };
   });
 
   const hendleKeyDown = event => {

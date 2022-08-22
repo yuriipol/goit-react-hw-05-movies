@@ -6,10 +6,10 @@ import SearchBar from './SearchBar';
 import Gallary from './Gallary';
 
 function App() {
-  const [imageName, setState] = useState('');
+  const [imageName, setName] = useState('');
 
   const hendleFormSearchSubmit = imageName => {
-    setState(imageName);
+    setName(imageName);
   };
 
   return (
