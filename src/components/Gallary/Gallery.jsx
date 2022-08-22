@@ -5,54 +5,72 @@ import PropTypes from 'prop-types';
 import Loader from 'components/Loader';
 import Modal from 'components/Modal';
 import Button from 'components/Button';
-import fetchImages from '../Servises/PictureAPI';
+import { getImages } from '../Servises/PictureAPI';
 
 class Gallery extends Component {
   state = {
-    images: null,
+    images: [],
     showModal: false,
     error: null,
     page: 1,
     lageImage: '',
     status: 'idle',
   };
+  // componentDidUpdate(prevProps, prevState) {
+  //   const prevImageName = prevProps.imageName;
+  //   const nextImageName = this.props.imageName;
+  //   const page = this.state.page;
+
+  //   if (prevImageName !== nextImageName) {
+  //     this.setState({ status: 'pending', page: 1 });
+  //     try {
+  //       getImages(nextImageName, page)
+  //         .then(images => images.hits)
+  //         .then(images => this.setState({ images, status: 'resolved' }));
+  //     } catch (error) {
+  //       console.log(error);
+  //       this.setState({ error, status: 'rejected' });
+  //     }
+  //   }
+
+  //   if (this.state.page !== prevState.page) {
+  //     try {
+  //       getImages(nextImageName, page)
+  //         .then(res => res.hits)
+  //         .then(images =>
+  //           this.setState({
+  //             images: [...prevState.images, ...images],
+  //             status: 'resolved',
+  //           })
+  //         );
+  //     } catch (error) {
+  //       console.log(error);
+  //       this.setState({ error, status: 'rejected' });
+  //     }
+  //   }
+  // }
+
   componentDidUpdate(prevProps, prevState) {
     const prevImageName = prevProps.imageName;
     const nextImageName = this.props.imageName;
-    const page = this.state.page;
 
-    if (prevImageName !== nextImageName) {
-      // console.log('Change name of image');
-      // console.log('prevProps.imageName:', prevProps.imageName);
-      // console.log('this.props.imageName:', this.props.imageName);
-      this.setState({ status: 'pending', page: 1 });
-      try {
-        fetchImages(nextImageName, page)
-          .then(images => images.data.hits)
-          .then(images => this.setState({ images, status: 'resolved' }));
-        // .catch(error => this.setState({ error, status: 'rejected' }));
-      } catch (error) {
-        console.log(error);
-        this.setState({ error, status: 'rejected' });
-      }
+    if (prevImageName !== nextImageName || this.state.page !== prevState.page) {
+      this.fetchImages();
     }
+  }
 
-    if (this.state.page !== prevState.page) {
-      try {
-        fetchImages(nextImageName, page)
-          .then(images => images.data.hits)
-          .then(images =>
-            this.setState({
-              images: [...prevState.images, ...images],
-              status: 'resolved',
-            })
-          );
-      } catch (error) {
-        console.log(error);
-        this.setState({ error, status: 'rejected' });
-      }
+  async fetchImages() {
+    const { page } = this.state;
+    const { imageName } = this.props;
 
-      // .catch(error => this.setState({ error, status: 'rejected' }));
+    try {
+      const data = await getImages(imageName, page).then(data => data.hits);
+      this.setState(prevState => ({
+        images: [...prevState.images, ...data],
+        status: 'resolved',
+      }));
+    } catch (error) {
+      this.setState({ error, status: 'rejected' });
     }
   }
   onClickImage = event => {
@@ -78,13 +96,13 @@ class Gallery extends Component {
   render() {
     const { images, error, status, showModal, lageImage } = this.state;
     if (status === 'idle') {
-      return <h1 className={style.title}>Enter name of imeges please</h1>;
+      return <h1 className={style.title}>Enter name of images please</h1>;
     }
     if (status === 'pending') {
       return <Loader />;
     }
     if (status === 'rejected') {
-      return <h2>{error.message}</h2>;
+      return <h2>{error}</h2>;
     }
     if (status === 'resolved') {
       return (
