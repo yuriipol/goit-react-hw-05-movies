@@ -5,8 +5,8 @@ const ImageGalleryItem = ({ image, onClick }) => {
   return (
     <li className={style.ImageGalleryItem} id={image.id} onClick={onClick}>
       <img
-        src={image.webformatURL}
-        alt={image.tag}
+        src={image.poster_path}
+        alt={image.title}
         className={style.ImageGalleryItem__image}
       />
     </li>

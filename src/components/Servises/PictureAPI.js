@@ -1,19 +1,19 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'https://pixabay.com/api',
+  baseURL: 'https://api.themoviedb.org/3/search/movie',
   params: {
-    per_page: 12,
-    key: '28704942-6968b84373f0d7bd37bb26e4e',
-    image_type: 'photo',
-    orientation: 'horizontal',
+    // per_page: 12,
+    api_key: '995e05884fd0ec30189499a041c3fca1',
+    // image_type: 'photo',
+    // orientation: 'horizontal',
   },
 });
 
 export const getImages = async (name, page) => {
   const { data } = await instance.get('/', {
     params: {
-      q: name,
+      query: name,
       page,
     },
   });

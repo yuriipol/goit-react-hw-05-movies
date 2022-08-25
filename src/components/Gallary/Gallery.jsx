@@ -22,7 +22,7 @@ function Gallery({ imageName }) {
       try {
         const currentPage = imageName !== imageNameRef.current ? 1 : page;
         const data = await getImages(imageName, currentPage).then(
-          data => data.hits
+          data => data.results
         );
         if (imageName !== imageNameRef.current) {
           setPage(1);
