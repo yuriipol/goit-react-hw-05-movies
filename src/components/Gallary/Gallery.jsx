@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import style from './Gallery.module.css';
 import ImageGalleryItem from 'components/ImageGalleryItem';
 import PropTypes from 'prop-types';
@@ -15,41 +15,32 @@ function Gallery({ imageName }) {
   const [lageImage, setLageImage] = useState('');
   const [status, setStatus] = useState('idle');
 
+  const imageNameRef = useRef(imageName);
+
   useEffect(() => {
+    const fetchImages = async () => {
+      try {
+        const currentPage = imageName !== imageNameRef.current ? 1 : page;
+        const data = await getImages(imageName, currentPage).then(
+          data => data.hits
+        );
+        if (imageName !== imageNameRef.current) {
+          setPage(1);
+          imageNameRef.current = imageName;
+        }
+        setImages(prevImages => [...prevImages, ...data]);
+        setStatus('resolved');
+      } catch (error) {
+        setError(error);
+        setStatus('rejected');
+      }
+    };
+
     if (imageName) {
       fetchImages();
     }
     /* eslint-disable-next-line */
-  }, [imageName]);
-
-  useEffect(() => {
-    if (imageName) {
-      loadMoreImages();
-    }
-    /* eslint-disable-next-line */
-  }, [page]);
-
-  const fetchImages = async () => {
-    try {
-      setStatus('pending');
-      const data = await getImages(imageName, page).then(data => data.hits);
-      setImages([...data]);
-      setStatus('resolved');
-    } catch (error) {
-      setError(error);
-      setStatus('rejected');
-    }
-  };
-  const loadMoreImages = async () => {
-    try {
-      const data = await getImages(imageName, page).then(data => data.hits);
-      setImages([...images, ...data]);
-      setStatus('resolved');
-    } catch (error) {
-      setError(error);
-      setStatus('rejected');
-    }
-  };
+  }, [imageName, page]);
 
   const onClickImage = event => {
     const findImage = images.find(
@@ -60,7 +51,6 @@ function Gallery({ imageName }) {
   };
   const onClickLoadMore = () => {
     setPage(prevState => prevState + 1);
-    // console.log(this.state.page);
   };
   const toggleModal = () => {
     setShowModal(!showModal);
