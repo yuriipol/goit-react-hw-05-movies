@@ -15,17 +15,28 @@ const Home = () => {
 
     fetchTrendingMovies();
   }, []);
-  const elementsMovies = movies.map(({ id, title }) => (
-    <li key={id}>
-      <Link to={`/movies/${id}`} id={id}>
-        {title}
+  const elementsMovies = movies.map(({ id, title, poster_path }) => (
+    <li key={id} className={style.item}>
+      <Link to={`/movies/${id}`} id={id} className={style.link}>
+        <img
+          className={style.image}
+          src={
+            poster_path
+              ? `https://image.tmdb.org/t/p/original${poster_path}`
+              : `https://static.vecteezy.com/system/resources/previews/003/393/235/original/error-404-with-the-cute-floppy-disk-mascot-free-vector.jpg`
+          }
+          alt={title}
+        />
+        <div>
+          <p className={style.title}>{title}</p>
+        </div>
       </Link>
     </li>
   ));
 
   return (
     <div className={style.container}>
-      <ul>{elementsMovies}</ul>
+      <ul className={style.movieList}>{elementsMovies}</ul>
     </div>
   );
 };

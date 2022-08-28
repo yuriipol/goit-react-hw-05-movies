@@ -1,0 +1,46 @@
+.movie {
+  display: flex;
+}
+.img {
+  width: 480px;
+  margin-right: 20px;
+}
+.startLink {
+  min-width: 40px;
+  margin-right: 10px;
+  padding: 5px;
+  border: 1px solid;
+  border-radius: 5px;
+  color: #fff;
+  background-color: #212121;
+  text-decoration: none;
+}
+.active {
+  background-color: red;
+  color: #fff;
+  border-color: #fff;
+}
+.title {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 60px;
+  font-weight: 900;
+}
+.use,
+.additional {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 30px;
+  font-weight: 700;
+}
+.overviews,
+.genres {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 40px;
+  font-weight: 900;
+}
+.overviewsText,
+.genresText {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 30px;
+  font-weight: 400;
+  max-width: 600px;
+}

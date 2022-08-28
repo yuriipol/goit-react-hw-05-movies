@@ -26,8 +26,7 @@ const Reviews = () => {
   ));
   return (
     <div className={style.container}>
-      <h2>Reviews</h2>
-      {reviewsList}
+      {reviews.length !== 0 ? <ul>{reviewsList}</ul> : <h2>No reviews</h2>}
     </div>
   );
 };

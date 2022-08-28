@@ -7,9 +7,13 @@ import Reviews from './Page/Movies/Reviews';
 const App = () => {
   return (
     <div>
-      <nav>
-        <NavLink to="/">Home</NavLink>
-        <NavLink to="/movies">Movies</NavLink>
+      <nav className="nav">
+        <NavLink to="/" className="startLink">
+          Home
+        </NavLink>
+        <NavLink to="/movies" className="startLink">
+          Movies
+        </NavLink>
       </nav>
       <hr />
 

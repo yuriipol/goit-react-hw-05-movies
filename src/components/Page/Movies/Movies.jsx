@@ -10,7 +10,7 @@ const Movies = () => {
   const [movies, setMovies] = useState([]);
   const [nameMovie, setNameMovie] = useState('');
 
-  //   console.log(nameMovie);
+  console.log(movies);
 
   const onSubmit = nameMovie => {
     setNameMovie(nameMovie);
@@ -27,21 +27,34 @@ const Movies = () => {
     }
   }, [nameMovie]);
 
-  const moviesItem = movies.map(({ id, title }) => (
-    <li key={id}>
-      <Link to={`/movies/${id}`}>{title}</Link>
+  const moviesItem = movies.map(({ id, title, poster_path }) => (
+    <li key={id} className={style.item}>
+      <Link to={`/movies/${id}`}>
+        <img
+          className={style.image}
+          src={
+            poster_path
+              ? `https://image.tmdb.org/t/p/original${poster_path}`
+              : `https://static.vecteezy.com/system/resources/previews/003/393/235/original/error-404-with-the-cute-floppy-disk-mascot-free-vector.jpg`
+          }
+          alt={title}
+        />
+        {/* <div className={style.descr}>{title}</div> */}
+      </Link>
     </li>
   ));
   return (
     <>
       <NavLink to="/">
-        <button type="button" className={style.buttonGoBack}>
-          Go back
-        </button>
+        {movies.length !== 0 && (
+          <button type="button" className={style.buttonGoBack}>
+            Go back
+          </button>
+        )}
       </NavLink>
       <Search onSubmit={onSubmit} />
 
-      <ul>{moviesItem}</ul>
+      <ul className={style.movieList}>{moviesItem}</ul>
     </>
   );
 };
