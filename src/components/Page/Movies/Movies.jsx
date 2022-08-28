@@ -1,5 +1,5 @@
 import style from './Movies.module.css';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useSearchParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Search from './Search';
@@ -8,24 +8,26 @@ import { getSerchMovies } from '../../Servises/MoviesAPI';
 
 const Movies = () => {
   const [movies, setMovies] = useState([]);
-  const [nameMovie, setNameMovie] = useState('');
+  // const [nameMovie, setNameMovie] = useState('');
+  const [nameMovie, setNameMovie] = useSearchParams();
+  const query = nameMovie.get('query') ?? '';
 
-  console.log(movies);
+  // console.log(movies);
 
   const onSubmit = nameMovie => {
-    setNameMovie(nameMovie);
+    setNameMovie({ query: nameMovie });
   };
 
   useEffect(() => {
     const fetchMovies = async () => {
-      const data = await getSerchMovies(nameMovie).then(data => data.results);
+      const data = await getSerchMovies(query).then(data => data.results);
       //   console.log(data);
       setMovies([...data]);
     };
-    if (nameMovie) {
+    if (query) {
       fetchMovies();
     }
-  }, [nameMovie]);
+  }, [query]);
 
   const moviesItem = movies.map(({ id, title, poster_path }) => (
     <li key={id} className={style.item}>
