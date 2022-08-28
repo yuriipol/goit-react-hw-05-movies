@@ -24,20 +24,19 @@ function Search({ onSubmit }) {
 
   return (
     <form className={style.form} onSubmit={hanedleSubmit}>
-      <button type="submit" className={style.button}>
-        <ImSearch />
-      </button>
-
       <input
         className={style.input}
         type="text"
         name="nameMovie"
         autoComplete="off"
         autoFocus
-        placeholder="Search images and photos"
+        placeholder="Search movies"
         value={nameMovie}
         onChange={hendleNameChange}
       />
+      <button type="submit" className={style.button}>
+        <ImSearch /> Search
+      </button>
     </form>
   );
 }

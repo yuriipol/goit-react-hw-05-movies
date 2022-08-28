@@ -31,8 +31,8 @@ const Cast = () => {
         alt={name}
         className={style.imgActor}
       />
-      <h3>{name}</h3>
-      <h3>Character: {character}</h3>
+      <h3 className={style.title}>{name}</h3>
+      <h3 className={style.character}>Character: {character}</h3>
     </li>
   ));
   return (

@@ -21,12 +21,16 @@ const Reviews = () => {
   const reviewsList = reviews.map(({ id, author, content }) => (
     <li key={id}>
       <h3>{author}</h3>
-      <p>{content}</p>
+      <p className={style.reviews}>{content}</p>
     </li>
   ));
   return (
     <div className={style.container}>
-      {reviews.length !== 0 ? <ul>{reviewsList}</ul> : <h2>No reviews</h2>}
+      {reviews.length !== 0 ? (
+        <ul className={style.list}>{reviewsList}</ul>
+      ) : (
+        <h2>No reviews</h2>
+      )}
     </div>
   );
 };

@@ -29,3 +29,19 @@
 /* .descr {
   padding: 15px;
 } */
+.buttonGoBack {
+  display: block;
+  width: 100px;
+  margin-left: 20px;
+
+  margin-right: 10px;
+  padding: 5px;
+  border: 1px solid;
+  border-radius: 5px;
+  color: #fff;
+  background-color: #212121;
+  text-decoration: none;
+}
+.buttonGoBack:hover {
+  background-color: red;
+}

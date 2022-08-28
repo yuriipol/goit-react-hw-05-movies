@@ -29,3 +29,15 @@
   transform: scale(1.03);
   cursor: zoom-in;
 }
+.title {
+  padding: 10px;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 20px;
+  margin: 0 auto;
+}
+.character {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 18px;
+  margin: 0 auto;
+  text-align: center;
+}
