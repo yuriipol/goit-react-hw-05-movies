@@ -1,7 +1,7 @@
 import style from './Movies.module.css';
 import { NavLink, useSearchParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Search from './Search';
 
 import { getSerchMovies } from '../../Servises/MoviesAPI';
@@ -11,6 +11,7 @@ const Movies = () => {
   // const [nameMovie, setNameMovie] = useState('');
   const [nameMovie, setNameMovie] = useSearchParams();
   const query = nameMovie.get('query') ?? '';
+  const location = useLocation();
 
   // console.log(movies);
 
@@ -31,7 +32,7 @@ const Movies = () => {
 
   const moviesItem = movies.map(({ id, title, poster_path }) => (
     <li key={id} className={style.item}>
-      <Link to={`/movies/${id}`}>
+      <Link to={`/movies/${id}`} state={{ from: location }}>
         <img
           className={style.image}
           src={
@@ -47,12 +48,8 @@ const Movies = () => {
   ));
   return (
     <>
-      <NavLink to="/">
-        {movies.length !== 0 && (
-          <button type="button" className={style.buttonGoBack}>
-            Go back
-          </button>
-        )}
+      <NavLink to="/" className={style.buttonGoBack}>
+        Go back
       </NavLink>
       <Search onSubmit={onSubmit} />
 

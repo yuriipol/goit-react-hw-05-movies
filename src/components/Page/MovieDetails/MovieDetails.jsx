@@ -1,12 +1,15 @@
 import { useParams, Outlet } from 'react-router-dom';
 import { getSerchDetailsMovie } from '../../Servises/MoviesAPI';
 import { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import style from './MovieDetails.module.css';
 
 const MovieDetails = () => {
   const [movieDetails, setMovieDetails] = useState({});
   const { movieId } = useParams();
+  const location = useLocation();
+  // console.log(location);
+  const backLinkHref = location.state?.from ?? '/movies';
   // console.log(movieId);
   // console.log(movieDetails);
   useEffect(() => {
@@ -22,6 +25,9 @@ const MovieDetails = () => {
   const userScore = ((100 * vote_average) / 10).toFixed(0);
   return (
     <div className={style.container}>
+      <NavLink to={backLinkHref} className={style.buttonGoBack}>
+        Go back
+      </NavLink>
       <div className={style.movie}>
         <img
           className={style.img}
