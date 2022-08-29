@@ -12,6 +12,9 @@ const MovieDetails = () => {
   const backLinkHref = location.state?.from ?? '/movies';
   // console.log(movieId);
   // console.log(movieDetails);
+
+  // const navigate = useNavigate();// нужно вверху еще заимпортировать useNavigate
+
   useEffect(() => {
     const fetchMoviesDetails = async () => {
       const data = await getSerchDetailsMovie(movieId);
@@ -28,6 +31,14 @@ const MovieDetails = () => {
       <NavLink to={backLinkHref} className={style.buttonGoBack}>
         Go back
       </NavLink>
+      {/* <button
+        type="button"
+        className={style.buttonGoBack}
+        onClick={() => navigate(-1)} //отличный способ на кнопку ходить назад
+      >
+        GoBack 
+      </button> */}
+
       <div className={style.movie}>
         <img
           className={style.img}
