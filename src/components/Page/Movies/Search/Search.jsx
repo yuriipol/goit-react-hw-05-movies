@@ -2,6 +2,7 @@ import style from './Search.module.css';
 
 import { useState } from 'react';
 import { ImSearch } from 'react-icons/im';
+import PropTypes from 'prop-types';
 
 function Search({ onSubmit }) {
   const [nameMovie, setNameMovie] = useState('');
@@ -41,3 +42,7 @@ function Search({ onSubmit }) {
   );
 }
 export default Search;
+
+Search.propTypes = {
+  onSubmit: PropTypes.func,
+};

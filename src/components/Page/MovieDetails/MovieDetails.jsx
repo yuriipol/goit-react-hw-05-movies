@@ -49,6 +49,7 @@ const MovieDetails = () => {
       <hr />
 
       <h2 className={style.additional}>Additional information</h2>
+
       <NavLink
         to="cast"
         className={({ isActive }) =>
