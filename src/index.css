@@ -28,6 +28,11 @@ img {
   max-width: 100%;
   height: auto;
 }
+.container {
+  width: 1140px;
+  padding: 0 15px;
+  margin: 0 auto;
+}
 .nav {
   padding: 15px;
   /* background-color: rgb(139, 214, 47); */
