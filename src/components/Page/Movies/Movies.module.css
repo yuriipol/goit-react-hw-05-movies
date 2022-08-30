@@ -29,7 +29,8 @@
 /* .descr {
   padding: 15px;
 } */
-.buttonGoBack {
+.buttonGoBack,
+.loadMore {
   display: block;
   width: 100px;
   margin-left: 20px;
@@ -43,6 +44,10 @@
   text-decoration: none;
   text-align: center;
 }
-.buttonGoBack:hover {
+.buttonGoBack,
+.loadMore:hover {
   background-color: red;
+}
+.loadMore {
+  margin: 0 auto;
 }

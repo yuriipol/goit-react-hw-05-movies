@@ -1,6 +1,6 @@
 import style from './Movies.module.css';
 import { NavLink, useSearchParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Search from './Search';
 
@@ -8,27 +8,53 @@ import { getSerchMovies } from '../../Servises/MoviesAPI';
 
 const Movies = () => {
   const [movies, setMovies] = useState([]);
+  const [page, setPage] = useState(1);
   // const [nameMovie, setNameMovie] = useState('');
   const [nameMovie, setNameMovie] = useSearchParams();
   const query = nameMovie.get('query') ?? '';
   const location = useLocation();
 
+  const nameMovieRef = useRef(query);
+
   // console.log(movies);
 
   const onSubmit = nameMovie => {
     setNameMovie({ query: nameMovie });
+    setPage(1);
   };
-
+  const onClickLoadVore = () => {
+    setPage(prevPage => prevPage + 1);
+  };
   useEffect(() => {
     const fetchMovies = async () => {
-      const data = await getSerchMovies(query).then(data => data.results);
-      //   console.log(data);
-      setMovies([...data]);
+      const isNewSearch = query !== nameMovieRef.current;
+      if (!query || (!isNewSearch && page === 1)) {
+        return;
+      }
+      try {
+        const data = await getSerchMovies(query, page).then(
+          data => data.results
+        );
+        if (isNewSearch) {
+          // setPage(1);
+          nameMovieRef.current = query;
+          // setImages([...data]);
+          // setStatus('resolved');
+          // return;
+        }
+        //   console.log(data);
+        setMovies(prevMovies => {
+          const movies = isNewSearch ? [] : prevMovies;
+          return [...movies, ...data];
+        });
+      } catch (error) {
+        console.log(error);
+      }
     };
     if (query) {
       fetchMovies();
     }
-  }, [query]);
+  }, [query, page]);
 
   const moviesItem = movies.map(({ id, title, poster_path }) => (
     <li key={id} className={style.item}>
@@ -54,6 +80,15 @@ const Movies = () => {
       <Search onSubmit={onSubmit} />
 
       <ul className={style.movieList}>{moviesItem}</ul>
+      {movies.length > 0 && (
+        <button
+          type="button"
+          className={style.loadMore}
+          onClick={onClickLoadVore}
+        >
+          Load more
+        </button>
+      )}
     </>
   );
 };
