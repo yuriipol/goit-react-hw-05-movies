@@ -15,15 +15,17 @@ const NotFound = lazy(() => import('./Page/NotFound/NotFound'));
 
 const App = () => {
   return (
-    <div>
-      <nav className="nav">
-        <NavLink to="/" className="startLink">
-          Home
-        </NavLink>
-        <NavLink to="/movies" className="startLink">
-          Movies
-        </NavLink>
-      </nav>
+    <>
+      <header>
+        <nav className="nav">
+          <NavLink to="/" className="startLink">
+            Home
+          </NavLink>
+          <NavLink to="/movies" className="startLink">
+            Movies
+          </NavLink>
+        </nav>
+      </header>
       <hr />
       <Suspense fallback={<h1>Loading...</h1>}>
         <Routes>
@@ -36,7 +38,7 @@ const App = () => {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
-    </div>
+    </>
   );
 };
 
