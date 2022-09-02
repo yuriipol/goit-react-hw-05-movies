@@ -32,6 +32,7 @@ const Movies = () => {
         console.log(error);
       }
     };
+
     if (query) {
       fetchMovies();
     }

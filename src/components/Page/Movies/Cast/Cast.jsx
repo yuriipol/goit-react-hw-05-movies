@@ -38,7 +38,11 @@ const Cast = () => {
   return (
     <div className={style.container}>
       <h2>Actors:</h2>
-      <ul className={style.actorsList}>{actorsList}</ul>
+      {actors.lenght > 0 ? (
+        <ul className={style.actorsList}>{actorsList}</ul>
+      ) : (
+        <h2>No Actors</h2>
+      )}
     </div>
   );
 };
