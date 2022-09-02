@@ -51,3 +51,6 @@ img {
   color: #fff;
   border-color: #fff;
 }
+.header {
+  background: linear-gradient(to top, black, 20%, red);
+}

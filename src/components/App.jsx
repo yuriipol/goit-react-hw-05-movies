@@ -16,7 +16,7 @@ const NotFound = lazy(() => import('./Page/NotFound/NotFound'));
 const App = () => {
   return (
     <div className="container">
-      <header>
+      <header className="header">
         <nav className="nav">
           <NavLink to="/" className="startLink">
             Home
