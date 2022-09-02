@@ -10,6 +10,7 @@ const MovieDetails = () => {
   const location = useLocation();
   // console.log(location);
   const backLinkHref = location.state?.from ?? '/movies';
+
   // console.log(movieId);
   // console.log(movieDetails);
 
