@@ -56,9 +56,11 @@ const Movies = () => {
   ));
   return (
     <>
-      <NavLink to="/" className={style.buttonGoBack}>
-        Go back
-      </NavLink>
+      {movies.length > 0 && (
+        <NavLink to="/" className={style.buttonGoBack}>
+          Go back
+        </NavLink>
+      )}
       <Search onSubmit={onSubmit} />
 
       <ul className={style.movieList}>{moviesItem}</ul>
